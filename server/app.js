@@ -9,16 +9,12 @@ import acronymRouter from './routes/acronym'
 
 import client from './db/client'
 import { openConnection } from './db/mongoHandler'
-import { createTextIndex } from './db/indexes'
-import { MONGO_DB_COLLECTION } from './db/consts'
 import { handleError } from './handlers/error'
 import { handleSuccess } from './handlers/success'
 
 const appInit = new Promise((resolve, reject) => [
   openConnection(client)
     .then(db => {
-      createTextIndex(db, MONGO_DB_COLLECTION, ['acronym', 'definition'])
-
       const app = express()
 
       app.use(function (req, res, next) {
