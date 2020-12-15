@@ -9,14 +9,14 @@ const createTextIndex = (db, collection, fields) => {
 
   const mongoObject = {}
   fields.forEach(field => {
-    mongoObject[field] = "text"  
-  });
+    mongoObject[field] = 'text'
+  })
   db.collection(collection).createIndex(
     mongoObject, (error, result) => {
       if (error) {
         console.log(`[Mongo setup] Error while creating text index for ${collection}, ${fields}: ${error}`)
       } else {
-        console.log(`[Mongo setup] Success while creating text index for ${collection}, ${fields}: ${result}`)                
+        console.log(`[Mongo setup] Success while creating text index for ${collection}, ${fields}: ${result}`)
       }
     }
   )

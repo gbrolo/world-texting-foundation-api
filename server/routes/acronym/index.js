@@ -1,5 +1,4 @@
 import express from 'express'
-import { error } from 'winston'
 import { MONGO_DB_COLLECTION } from '../../db/consts'
 import { insertBaseAcronyms } from '../../db/insertions'
 import { addAcronym, deleteAcronym, getAcronym, getAcronyms, updateAcronym } from '../../db/providers/acronyms'
@@ -12,7 +11,7 @@ router.get('/', function (req, res, next) {
     req.query,
     {
       from: validateInteger,
-      limit: validateInteger,
+      limit: validateInteger
     }
   )
     .then(() => {
@@ -20,7 +19,7 @@ router.get('/', function (req, res, next) {
         queryObject[key] = decodeURIComponent(req.query[key])
         return queryObject
       }, {})
-    
+
       getAcronyms(req.mongo, MONGO_DB_COLLECTION, query)
         .then(succ => req.handleSuccess(succ, res))
         .catch(error => next(error))
@@ -30,7 +29,7 @@ router.get('/', function (req, res, next) {
 
 /* POST new acronym */
 router.post('/', function (req, res, next) {
-  verifyPresentParams(['acronym', 'definition'], {...req.body})
+  verifyPresentParams(['acronym', 'definition'], { ...req.body })
     .then(() => {
       const acronym = {
         acronym: req.body.acronym,
@@ -48,7 +47,7 @@ router.post('/', function (req, res, next) {
 router.put('/:acronym', function (req, res, next) {
   getAuthenticationToken(req)
     .then((token) => {
-      verifyPresentParams(['acronym', 'definition'], {...req.params, ...req.body})
+      verifyPresentParams(['acronym', 'definition'], { ...req.params, ...req.body })
         .then(() => {
           const acronym = {
             acronym: decodeURIComponent(req.params.acronym),
@@ -68,7 +67,7 @@ router.put('/:acronym', function (req, res, next) {
 router.delete('/:acronym', function (req, res, next) {
   getAuthenticationToken(req)
     .then((token) => {
-      verifyPresentParams(['acronym'], {...req.params})
+      verifyPresentParams(['acronym'], { ...req.params })
         .then(() => {
           deleteAcronym(req.mongo, MONGO_DB_COLLECTION, decodeURIComponent(req.params.acronym))
             .then(succ => req.handleSuccess(succ, res))
@@ -81,7 +80,7 @@ router.delete('/:acronym', function (req, res, next) {
 
 /* GET acronym */
 router.get('/:acronym', function (req, res, next) {
-  verifyPresentParams(['acronym'], {...req.params})
+  verifyPresentParams(['acronym'], { ...req.params })
     .then(() => {
       getAcronym(req.mongo, MONGO_DB_COLLECTION, decodeURIComponent(req.params.acronym))
         .then(succ => req.handleSuccess(succ, res))

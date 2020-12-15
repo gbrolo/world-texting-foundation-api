@@ -17,7 +17,7 @@ import { handleSuccess } from './handlers/success'
 const appInit = new Promise((resolve, reject) => [
   openConnection(client)
     .then(db => {
-      createTextIndex(db, MONGO_DB_COLLECTION, ['acronym', 'definition'])      
+      createTextIndex(db, MONGO_DB_COLLECTION, ['acronym', 'definition'])
 
       const app = express()
 

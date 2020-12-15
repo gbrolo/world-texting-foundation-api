@@ -1,10 +1,10 @@
 class ErrorHandler extends Error {
-  constructor(
+  constructor (
     status,
     errorId,
     errorMessage,
     errorLocation,
-    errorStackTrace,
+    errorStackTrace
   ) {
     super()
     this.status = status
@@ -21,7 +21,7 @@ const handleError = (error, req, res) => {
     errorId,
     errorMessage,
     errorLocation,
-    errorStackTrace,
+    errorStackTrace
   } = error
 
   req.errorLogger.log('error', `[${errorId}] [${errorLocation}] [${JSON.stringify(errorStackTrace)}]`)

@@ -1,4 +1,3 @@
-import { request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ErrorHandler } from '../handlers/error'
 import { MISSING_PARAMETER_ERROR, UNAUTHORIZED_ERROR, INVALID_PARAMETER_ERROR } from './errors'
@@ -11,10 +10,10 @@ import { MISSING_PARAMETER_ERROR, UNAUTHORIZED_ERROR, INVALID_PARAMETER_ERROR } 
 const verifyPresentParams = (
   paramList,
   requestParams
-) => {  
-  return new Promise((resolve, reject) => {    
+) => {
+  return new Promise((resolve, reject) => {
     const requestParamsKeys = Object.keys(requestParams)
-    const verification = paramList.every(v => requestParamsKeys.includes(v))    
+    const verification = paramList.every(v => requestParamsKeys.includes(v))
 
     if (verification) {
       resolve()
@@ -36,10 +35,10 @@ const validatePresentParams = (
   requestParams,
   requestParamsComparators
 ) => {
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     for (const prop in requestParams) {
       if (requestParams[prop] !== undefined) {
-        if (requestParamsComparators.hasOwnProperty(prop) && !requestParamsComparators[prop](requestParams[prop])) {
+        if (requestParamsComparators[prop] && !requestParamsComparators[prop](requestParams[prop])) {
           reject(
             new ErrorHandler(
               StatusCodes.BAD_REQUEST,
@@ -52,7 +51,7 @@ const validatePresentParams = (
         }
       }
     }
-    resolve()    
+    resolve()
   })
 }
 
@@ -83,7 +82,7 @@ const getAuthenticationToken = (req) => {
   })
 }
 
-const validateInteger = (str) => {  
+const validateInteger = (str) => {
   const number = parseInt(str)
   return !isNaN(number)
 }

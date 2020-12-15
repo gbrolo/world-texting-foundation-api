@@ -1,11 +1,9 @@
-import uniqid from 'uniqid'
 import { ErrorHandler } from '../../handlers/error'
 import { SuccessResponseHandler } from '../../handlers/success'
 import data from './data'
 import { StatusCodes } from 'http-status-codes'
 import { INSERT_BASE_ACRONYMS_ERROR } from './errors'
-const { MONGO_DB_COLLECTION } = require("../consts")
-
+const { MONGO_DB_COLLECTION } = require('../consts')
 
 const prepareData = () => {
   // remove duplicates (if any)

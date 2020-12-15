@@ -15,20 +15,20 @@ appInit
     /**
      * Get port from environment and store in Express.
      */
-    
+
     const port = normalizePort(process.env.PORT || '3000')
     app.set('port', port)
-    
+
     /**
      * Create HTTP server.
      */
-    
+
     const server = http.createServer(app)
-    
+
     /**
      * Listen on provided port, on all network interfaces.
      */
-    
+
     server.listen(port)
     server.on('error', onError)
     server.on('listening', () => onListening(server))
@@ -37,7 +37,6 @@ appInit
     console.log(error)
     process.exit(1)
   })
-
 
 /**
  * Normalize a port into a number, string, or false.

@@ -1,4 +1,4 @@
-const { MONGO_DB_DATABASE } = require("./consts")
+const { MONGO_DB_DATABASE } = require('./consts')
 
 const openConnection = (client) => {
   return new Promise((resolve, reject) => {

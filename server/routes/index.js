@@ -11,12 +11,12 @@ router.get('/', function (req, res, next) {
 
 /* GET random acronym */
 router.get('/random/:count', function (req, res, next) {
-  verifyPresentParams(['count'], {...req.params})
+  verifyPresentParams(['count'], { ...req.params })
     .then(() => {
       validatePresentParams(
         req.params,
         {
-          count: validateInteger          
+          count: validateInteger
         }
       )
         .then(() => {

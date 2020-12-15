@@ -4,7 +4,7 @@ import {
   NOT_FOUND_ACRONYM_ERROR,
   DUPLICATE_ACRONYM_ERROR,
   RANDOM_COUNT_TOO_BIG_ERROR,
-  SEARCH_NOT_FOUND_ACRONYM_ERROR,
+  SEARCH_NOT_FOUND_ACRONYM_ERROR
 } from './errors'
 import { StatusCodes } from 'http-status-codes'
 import { SuccessResponseHandler } from '../../handlers/success'
@@ -13,12 +13,12 @@ import _ from 'lodash'
 
 const addAcronym = (db, collection, acronym) => {
   return new Promise((resolve, reject) => {
-    const newAcronym = {...acronym, _id: acronym.acronym}
+    const newAcronym = { ...acronym, _id: acronym.acronym }
 
     db.collection(collection).insertOne(
       newAcronym,
       (error, result) => {
-        if (error) {          
+        if (error) {
           if (error.code === 11000) {
             reject(
               new ErrorHandler(
@@ -55,10 +55,10 @@ const addAcronym = (db, collection, acronym) => {
 }
 
 const updateAcronym = (db, collection, acronym) => {
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     db.collection(collection).updateOne(
-      { '_id': acronym.acronym },
-      { '$set': { definition: acronym.definition } },
+      { _id: acronym.acronym },
+      { $set: { definition: acronym.definition } },
       (error, result) => {
         if (error) {
           reject(
@@ -85,9 +85,9 @@ const updateAcronym = (db, collection, acronym) => {
 }
 
 const deleteAcronym = (db, collection, acronym) => {
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     db.collection(collection).deleteOne(
-      { '_id': acronym },      
+      { _id: acronym },
       (error, result) => {
         if (error) {
           console.log(error)
@@ -115,9 +115,9 @@ const deleteAcronym = (db, collection, acronym) => {
 }
 
 const getAcronym = (db, collection, acronym) => {
-  return new Promise((resolve, reject) => {    
-    db.collection(collection).find({ 'acronym': acronym }).toArray((error, result) => {
-      if (error) {        
+  return new Promise((resolve, reject) => {
+    db.collection(collection).find({ acronym: acronym }).toArray((error, result) => {
+      if (error) {
         reject(
           new ErrorHandler(
             StatusCodes.INTERNAL_SERVER_ERROR,
@@ -128,7 +128,7 @@ const getAcronym = (db, collection, acronym) => {
           )
         )
       }
-      
+
       if (result.length === 0) {
         reject(
           new ErrorHandler(
@@ -143,7 +143,7 @@ const getAcronym = (db, collection, acronym) => {
         resolve(
           new SuccessResponseHandler(
             StatusCodes.OK,
-            `Successfully got matching acronym`,
+            'Successfully got matching acronym',
             result[0]
           )
         )
@@ -159,7 +159,7 @@ const getAcronyms = (db, collection, options) => {
 
     if (search) {
       // query = query.find({ '$text': { '$search': search } })
-      query = query.find({ 'acronym': new RegExp(search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), 'gi') })
+      query = query.find({ acronym: new RegExp(search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'gi') })
     } else {
       query = query.find()
     }
@@ -169,13 +169,13 @@ const getAcronyms = (db, collection, options) => {
         if (from) {
           query = query.skip(parseInt(from))
         }
-    
+
         if (limit) {
           query = query.limit(parseInt(limit))
         }
-    
+
         query.toArray((error, result) => {
-          if (error) {        
+          if (error) {
             reject(
               new ErrorHandler(
                 StatusCodes.INTERNAL_SERVER_ERROR,
@@ -186,7 +186,7 @@ const getAcronyms = (db, collection, options) => {
               )
             )
           }
-          
+
           if (result.length === 0) {
             reject(
               new ErrorHandler(
@@ -201,7 +201,7 @@ const getAcronyms = (db, collection, options) => {
             resolve(
               new SuccessResponseHandler(
                 StatusCodes.OK,
-                `Successfully got acronyms`,
+                'Successfully got acronyms',
                 result,
                 [
                   {
@@ -233,34 +233,34 @@ const getRandomAcronyms = (db, collection, count) => {
           'getRandomAcronyms(...)',
           RANDOM_COUNT_TOO_BIG_ERROR.errorMessage
         )
-  
+
         // count can't be bigger than actual acronyms collection size (since we can't repeat items to comply with non adjacent matching and duplicates)
         if (acronyms.length > count) {
           const seed = Math.floor(Math.random() * 2) + 1
           // get even or odd positioned acronyms to comply with non adjacent matching
           const choppedAcronyms = _.shuffle(seed === 1 ? acronyms.filter((acronym, index) => index % 2 === 0) : acronyms.filter((acronym, index) => index % 2 !== 0))
-          
+
           // count can't still be bigger than choppedAcronyms since we have to select items inside this sub set
           if (choppedAcronyms.length > count) {
             const randomAcronyms = []
             const uniquePositions = []
-  
-            let generatedPositions = (arr) => {
+
+            const generatedPositions = (arr) => {
               if (arr.length >= count) return
-              let newNumber = Math.floor(Math.random() * count + 1)
+              const newNumber = Math.floor(Math.random() * count + 1)
               if (arr.indexOf(newNumber) < 0) {
                 arr.push(newNumber)
                 randomAcronyms.push(choppedAcronyms[newNumber])
               }
               generatedPositions(arr)
             }
-  
+
             generatedPositions(uniquePositions)
-  
+
             resolve(
               new SuccessResponseHandler(
                 StatusCodes.OK,
-                `Successfully got random acronyms`,
+                'Successfully got random acronyms',
                 randomAcronyms
               )
             )

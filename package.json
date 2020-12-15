@@ -17,7 +17,9 @@
   },
   "standard": {
     "ignore": [
-      "**/tests/"
+      "**/tests/",
+      "server/bin/*",
+      "server/app.js"
     ]
   },
   "nodemonConfig": {
