@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "892fd389-68ca-498a-afee-097270e91981",
+		"name": "World Texting Foundation",
+		"description": "Set of API requests to the WTF API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Initialize database with base data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/acronym/initialize-list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"acronym",
+						"initialize-list"
+					]
+				},
+				"description": "Fills database with initial data"
+			},
+			"response": []
+		},
+		{
+			"name": "GET acronym",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/acronym/14AA41",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"acronym",
+						"14AA41"
+					]
+				},
+				"description": "GET an acronym via request param"
+			},
+			"response": []
+		},
+		{
+			"name": "Add acronym",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "acronym",
+							"value": "NJSR!",
+							"type": "text"
+						},
+						{
+							"key": "definition",
+							"value": "Node js rules!",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/acronym",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"acronym"
+					]
+				},
+				"description": "Via body params:\r\n    - acronym: acronym to insert\r\n    - definition: acronym's definition"
+			},
+			"response": []
+		},
+		{
+			"name": "GET acronyms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/acronym?from=0&limit=2&search=14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"acronym"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "search",
+							"value": "14"
+						}
+					]
+				},
+				"description": "Fetch acronyms inside collection.\r\nUse query parameters to filter:\r\n    - from=0: an integer to start fetching at that point\r\n    - limit=2: an integer to limit response results\r\n    - search=14: search query\r\n\r\nDon't include params if you wish to get all results unpaginated"
+			},
+			"response": []
+		},
+		{
+			"name": "Update acronym",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQxMGM4ZjhiMGRjN2Y1NWUyYjM1NDFmMjllNWFjMzc0M2Y3N2NjZWUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiR2FicmllbCBCcm9sbyIsImlzQWRtaW4iOnRydWUsImFjY2Vzc0xldmVsIjoiS1JPTk9TIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Nob3Btb25zdGVyLWRldiIsImF1ZCI6InNob3Btb25zdGVyLWRldiIsImF1dGhfdGltZSI6MTYwMzk5MTM1MCwidXNlcl9pZCI6IjRvUVh5bkd2c0pTeVdxemFIOW5GdmEwVEJMbTEiLCJzdWIiOiI0b1FYeW5HdnNKU3lXcXphSDluRnZhMFRCTG0xIiwiaWF0IjoxNjAzOTkxMzUwLCJleHAiOjE2MDM5OTQ5NTAsImVtYWlsIjoiZ2FicmllbEBlY29tbWVyY2VsYXRpbm9hbWVyaWNhLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV9udW1iZXIiOiIrNTAyNTY5NzM5MTIiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis1MDI1Njk3MzkxMiJdLCJlbWFpbCI6WyJnYWJyaWVsQGVjb21tZXJjZWxhdGlub2FtZXJpY2EuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.mpf28YUnjiUT9aM7xQ3k9rTRRDk2DqO8KnXS1DdDtUx095GsPC_btRr8G8Myqc_ydR_eR-u3f2aqzNltjunrzBOAAx2iIwRDlrz8Sn8npOtRJuCSZCcIwuVtVV12Xcfby3fADQtAtOFUjNMpSn1Be_oiHeTQGz-VZF7eR6yvUXAS3sG7fi8hO0J36UdIUraYENEr5VDSVkV7gWXwgQEURILsZsk8PijTHWmopAhqsi7l9xVfPqds8ut5OwXIR8tr4pRrdP7HY5V3xGmGPAn4MY1fbIKUMc3MiIYoxmn0walirGPEtO1ShmtM0SlZiwbCBuQQLfnPXc6fFnFcIWuLtg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "definition",
+							"value": "Node js rules, updated",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/acronym/NJSR!",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"acronym",
+						"NJSR!"
+					]
+				},
+				"description": "Updates acronym with request param acronym and body param definition"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete acronym",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQxMGM4ZjhiMGRjN2Y1NWUyYjM1NDFmMjllNWFjMzc0M2Y3N2NjZWUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiR2FicmllbCBCcm9sbyIsImlzQWRtaW4iOnRydWUsImFjY2Vzc0xldmVsIjoiS1JPTk9TIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL3Nob3Btb25zdGVyLWRldiIsImF1ZCI6InNob3Btb25zdGVyLWRldiIsImF1dGhfdGltZSI6MTYwMzk5MTM1MCwidXNlcl9pZCI6IjRvUVh5bkd2c0pTeVdxemFIOW5GdmEwVEJMbTEiLCJzdWIiOiI0b1FYeW5HdnNKU3lXcXphSDluRnZhMFRCTG0xIiwiaWF0IjoxNjAzOTkxMzUwLCJleHAiOjE2MDM5OTQ5NTAsImVtYWlsIjoiZ2FicmllbEBlY29tbWVyY2VsYXRpbm9hbWVyaWNhLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV9udW1iZXIiOiIrNTAyNTY5NzM5MTIiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis1MDI1Njk3MzkxMiJdLCJlbWFpbCI6WyJnYWJyaWVsQGVjb21tZXJjZWxhdGlub2FtZXJpY2EuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.mpf28YUnjiUT9aM7xQ3k9rTRRDk2DqO8KnXS1DdDtUx095GsPC_btRr8G8Myqc_ydR_eR-u3f2aqzNltjunrzBOAAx2iIwRDlrz8Sn8npOtRJuCSZCcIwuVtVV12Xcfby3fADQtAtOFUjNMpSn1Be_oiHeTQGz-VZF7eR6yvUXAS3sG7fi8hO0J36UdIUraYENEr5VDSVkV7gWXwgQEURILsZsk8PijTHWmopAhqsi7l9xVfPqds8ut5OwXIR8tr4pRrdP7HY5V3xGmGPAn4MY1fbIKUMc3MiIYoxmn0walirGPEtO1ShmtM0SlZiwbCBuQQLfnPXc6fFnFcIWuLtg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/acronym/NJSR!",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"acronym",
+						"NJSR!"
+					]
+				},
+				"description": "Deletes acronym via request param"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "aa370479-8791-4ddd-b643-8069e6222e21",
+			"key": "API_BASE_URL",
+			"value": "http://localhost:3000"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

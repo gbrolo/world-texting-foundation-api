@@ -11,8 +11,11 @@ This REST API comes with an integrated ```docker-compose.yml``` file. To run pro
 
 This will set up a network and attach a MongoDB image and the server API and it will run on port ```3000```.
 
+#### Alternative docker compose command
+You can also run ```docker-compose up -d --build``` to start on detached mode and force Docker to rebuild images, so production image is always up to date.
+
 ### Production command
-```npm start``` runs production command, which runs tests, cleans up code, and builds a ```dist-server``` directory to start the production server.
+```npm start``` runs production command, which runs tests, cleans up code, and builds a ```dist-server``` directory to start the production server (not necessary to run if using Docker).
 
 ## Development
 ### Pre-requisites
@@ -66,3 +69,6 @@ Test files are located inside the ```/tests``` folder at each route/provider dir
 
 ## MongoDB config
 MongoDB client configuration and db/collection constants are located at ```/server/db```
+
+## Postman collection
+You can import ```wtf.postman_collection``` into Postman to make requests to running API.
