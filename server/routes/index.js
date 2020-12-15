@@ -1,6 +1,4 @@
 import express from 'express'
-import { invertText } from '../providers/invertions'
-import { verifyPresentParams } from '../providers/paramChecker'
 const router = express.Router()
 
 /* GET home page. */

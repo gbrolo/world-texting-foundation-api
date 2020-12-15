@@ -4,32 +4,40 @@
  * Module dependencies.
  */
 
-import app from '../app'
+import appInit from '../app'
 import debugLib from 'debug'
 import http from 'http'
 
 const debug = debugLib('world-texting-foundation-api:server')
 
-/**
- * Get port from environment and store in Express.
- */
+appInit
+  .then(app => {
+    /**
+     * Get port from environment and store in Express.
+     */
+    
+    const port = normalizePort(process.env.PORT || '3000')
+    app.set('port', port)
+    
+    /**
+     * Create HTTP server.
+     */
+    
+    const server = http.createServer(app)
+    
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    
+    server.listen(port)
+    server.on('error', onError)
+    server.on('listening', () => onListening(server))
+  })
+  .catch(error => {
+    console.log(error)
+    process.exit(1)
+  })
 
-const port = normalizePort(process.env.PORT || '3000')
-app.set('port', port)
-
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(app)
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port)
-server.on('error', onError)
-server.on('listening', onListening)
 
 /**
  * Normalize a port into a number, string, or false.
@@ -81,7 +89,7 @@ function onError (error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening () {
+function onListening (server) {
   const addr = server.address()
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
