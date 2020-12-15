@@ -1,4 +1,4 @@
-{
+export default {
 	"acronyms": [{
 			"?": "I don't understand what you mean"
 		},

@@ -1,4 +1,5 @@
 import express from 'express'
+import { insertBaseAcronyms } from '../../db/insertions'
 const router = express.Router()
 
 /* GET acronyms list */
@@ -37,6 +38,11 @@ router.get('/:acronym', function (req, res, next) {
   })
 })
 
-
+/* POST fill database with initial acronym list */
+router.post('/initialize-list', function (req, res, next) {
+  insertBaseAcronyms(req.mongo)
+    .then(succ => req.handleSuccess(succ, res))
+    .catch(error => next(error))
+})
 
 export default router
