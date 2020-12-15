@@ -17,3 +17,8 @@ export const SEARCH_NOT_FOUND_ACRONYM_ERROR = {
   errorId: 'SEARCH_NOT_FOUND_ACRONYM_ERROR',
   errorMessage: 'There is no match for requested search query'
 }
+
+export const RANDOM_COUNT_TOO_BIG_ERROR = {
+  errorId: 'RANDOM_COUNT_TOO_BIG_ERROR',
+  errorMessage: 'Your requested count is bigger than the acronym count. Please, request a lower acronym count.'
+}

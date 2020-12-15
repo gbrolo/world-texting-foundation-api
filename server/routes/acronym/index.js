@@ -3,18 +3,28 @@ import { error } from 'winston'
 import { MONGO_DB_COLLECTION } from '../../db/consts'
 import { insertBaseAcronyms } from '../../db/insertions'
 import { addAcronym, deleteAcronym, getAcronym, getAcronyms, updateAcronym } from '../../db/providers/acronyms'
-import { getAuthenticationToken, verifyPresentParams } from '../../providers/requestHandlers'
+import { getAuthenticationToken, validateInteger, validatePresentParams, verifyPresentParams } from '../../providers/requestHandlers'
 const router = express.Router()
 
 /* GET acronyms list */
 router.get('/', function (req, res, next) {
-  const query = Object.keys(req.query).reduce((queryObject, key) => {
-    queryObject[key] = decodeURIComponent(req.query[key])
-    return queryObject
-  }, {})
-
-  getAcronyms(req.mongo, MONGO_DB_COLLECTION, query)
-    .then(succ => req.handleSuccess(succ, res))
+  validatePresentParams(
+    req.query,
+    {
+      from: validateInteger,
+      limit: validateInteger,
+    }
+  )
+    .then(() => {
+      const query = Object.keys(req.query).reduce((queryObject, key) => {
+        queryObject[key] = decodeURIComponent(req.query[key])
+        return queryObject
+      }, {})
+    
+      getAcronyms(req.mongo, MONGO_DB_COLLECTION, query)
+        .then(succ => req.handleSuccess(succ, res))
+        .catch(error => next(error))
+    })
     .catch(error => next(error))
 })
 

@@ -1,6 +1,7 @@
+import { request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { ErrorHandler } from '../handlers/error'
-import { MISSING_PARAMETER_ERROR, UNAUTHORIZED_ERROR } from './errors'
+import { MISSING_PARAMETER_ERROR, UNAUTHORIZED_ERROR, INVALID_PARAMETER_ERROR } from './errors'
 
 /**
  * verifies if required params are present
@@ -31,6 +32,30 @@ const verifyPresentParams = (
   })
 }
 
+const validatePresentParams = (
+  requestParams,
+  requestParamsComparators
+) => {
+  return new Promise((resolve, reject) => {    
+    for (const prop in requestParams) {
+      if (requestParams[prop] !== undefined) {
+        if (requestParamsComparators.hasOwnProperty(prop) && !requestParamsComparators[prop](requestParams[prop])) {
+          reject(
+            new ErrorHandler(
+              StatusCodes.BAD_REQUEST,
+              INVALID_PARAMETER_ERROR.errorId,
+              INVALID_PARAMETER_ERROR.errorMessage,
+              'validatePresentParams(...)',
+              INVALID_PARAMETER_ERROR.errorMessage
+            )
+          )
+        }
+      }
+    }
+    resolve()    
+  })
+}
+
 /**
  * Verifies if user is authenticated by extracting Bearer Token from authorization
  * Should check if given token is valid, but for this example, there is no OAuth system or similar to
@@ -58,7 +83,14 @@ const getAuthenticationToken = (req) => {
   })
 }
 
+const validateInteger = (str) => {  
+  const number = parseInt(str)
+  return !isNaN(number)
+}
+
 export {
+  validateInteger,
   verifyPresentParams,
+  validatePresentParams,
   getAuthenticationToken
 }
