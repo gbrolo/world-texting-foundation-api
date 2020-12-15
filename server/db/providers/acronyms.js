@@ -43,7 +43,67 @@ const addAcronym = (db, collection, acronym) => {
           new SuccessResponseHandler(
             StatusCodes.OK,
             `Successfully added acronym ${acronym.acronym}`,
-            undefined
+            { created: true }
+          )
+        )
+      }
+    )
+  })
+}
+
+const updateAcronym = (db, collection, acronym) => {
+  return new Promise((resolve, reject) => {    
+    db.collection(collection).updateOne(
+      { '_id': acronym.acronym },
+      { '$set': { definition: acronym.definition } },
+      (error, result) => {
+        if (error) {
+          reject(
+            new ErrorHandler(
+              StatusCodes.INTERNAL_SERVER_ERROR,
+              ACRONYM_ERROR.errorId,
+              ACRONYM_ERROR.errorMessage,
+              'updateAcronym(...)',
+              error
+            )
+          )
+        }
+
+        resolve(
+          new SuccessResponseHandler(
+            StatusCodes.OK,
+            `Successfully updated acronym ${acronym.acronym}`,
+            { updated: true }
+          )
+        )
+      }
+    )
+  })
+}
+
+const deleteAcronym = (db, collection, acronym) => {
+  return new Promise((resolve, reject) => {    
+    db.collection(collection).deleteOne(
+      { '_id': acronym },      
+      (error, result) => {
+        if (error) {
+          console.log(error)
+          reject(
+            new ErrorHandler(
+              StatusCodes.INTERNAL_SERVER_ERROR,
+              ACRONYM_ERROR.errorId,
+              ACRONYM_ERROR.errorMessage,
+              'updateAcronym(...)',
+              error
+            )
+          )
+        }
+
+        resolve(
+          new SuccessResponseHandler(
+            StatusCodes.OK,
+            `Successfully deleted acronym ${acronym}`,
+            { deleted: true }
           )
         )
       }
@@ -161,5 +221,7 @@ const getAcronyms = (db, collection, options) => {
 export {
   getAcronym,
   addAcronym,
-  getAcronyms
+  getAcronyms,
+  updateAcronym,
+  deleteAcronym
 }
